@@ -12,11 +12,18 @@ function App() {
         {id: 3, title: 'Javascript2', body: 'description'},
     ]);
     const [title, setTitle] = useState('');
-    const bodyInputRef = useRef();
+    const [body, setBody] = useState('');
 
     function addNewPost(e) {
         e.preventDefault();
-        console.log(bodyInputRef.current.value)
+        const newPost = {
+            id: Date.now(),
+            title,
+            body
+        };
+        setPosts([...posts, newPost]);
+        setTitle('');
+        setBody('');
     }
 
     return (
@@ -25,7 +32,7 @@ function App() {
                 {/*Управляемый инпут*/}
                 <MyInput onChange={e => setTitle(e.target.value)} value={title} placeholder='Post name'/>
                 {/*неуправляемый инпут*/}
-                <MyInput ref={bodyInputRef} placeholder='Post description'/>
+                <MyInput onChange={e => setBody(e.target.value)} value={body} placeholder='Post description'/>
                 <MyButton onClick={addNewPost}>Create post</MyButton>
             </form>
             <PostList posts={posts} title='Post list 1'/>
